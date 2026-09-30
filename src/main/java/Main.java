@@ -5,7 +5,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class Pokedex {
+public class Main {
 
     public static void main(String[] args) {
         boolean running = true;

@@ -30,7 +30,7 @@ public class PokedexMenu {
     }
     static void resetToSeeded(ArrayList<Pokemon> pokemons) {
         pokemons.clear();
-        pokemons.addAll(Pokedex.seededData());
+        pokemons.addAll(Main.seededData());
         System.out.println("Reset to seeded data");
     }
 }
