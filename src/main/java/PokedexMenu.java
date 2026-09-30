@@ -1,0 +1,36 @@
+import java.util.ArrayList;
+
+public class PokedexMenu {
+    static void viewPokemons(ArrayList<Pokemon> pokemons) {
+        if (pokemons.isEmpty()) {
+            System.out.println("No Pokemon");
+            return;
+        }
+        for (Pokemon pokemon : pokemons) {
+            System.out.println("Name: " + pokemon.getName() + "  (" + pokemon.getType() + ")\n" + " - Max HP: " + pokemon.getMaxHP() + "\n" + " - Current HP: " + pokemon.getCurrentHP() + "\n" + " - Attacks:");
+
+            for (Attack attack : pokemon.getAttacks()) {
+                System.out.println(" -" + attack.getName() + " (Damage: " + attack.getBaseDamage() + ", Accuracy: " + attack.getAccuracy() + ", Type: " + attack.getType() + ")");
+            }
+            System.out.println();
+        }
+    }
+
+    static void removePokemon(ArrayList<Pokemon> pokemons) {
+        if (pokemons.isEmpty()) {
+            System.out.println("No Pokemon");
+            return;
+        }
+        for (int i = 0; i < pokemons.size(); i++) {
+            System.out.println(i + 1 + ". " + pokemons.get(i).getName());
+        }
+        int pick = InputHelper.addInt("Pick the Pokemon you want to remove: ", 1, pokemons.size());
+        Pokemon removed = pokemons.remove(pick - 1);
+        System.out.println("Removed " + removed.getName());
+    }
+    static void resetToSeeded(ArrayList<Pokemon> pokemons) {
+        pokemons.clear();
+        pokemons.addAll(Pokedex.seededData());
+        System.out.println("Reset to seeded data");
+    }
+}
