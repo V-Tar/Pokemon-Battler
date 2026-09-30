@@ -4,7 +4,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.NoSuchElementException;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -17,6 +16,10 @@ public class Main {
         } else {
             System.out.println("Loaded " + pokemons.size() + " Pokemon from file");
         }
+
+        Pokedex pokedex = new Pokedex();
+        pokedex.replaceAll(pokemons);
+        pokemons = pokedex.getList();
 
         try {
             while (running) { // main meny loop med olika val 1-8
