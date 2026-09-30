@@ -7,12 +7,6 @@ import java.util.NoSuchElementException;
 
 public class Pokedex {
 
-    public static class InvalidPokemonException extends RuntimeException {
-        public InvalidPokemonException(String message) {
-            super(message);
-        }
-    }
-
     public static void main(String[] args) {
         boolean running = true;
         ArrayList<Pokemon> pokemons = loadPokemons();
@@ -70,7 +64,7 @@ public class Pokedex {
                             pokemons.add(p); // Läggs till sist, så att en halvfärdig Pokemon aldrig hamnar i Pokedex
                             System.out.println("Added " + p.getName() + " with " + a.getName() + " to the Pokedex");
 
-                        } catch (Pokedex.InvalidPokemonException e) {
+                        } catch (InvalidPokemonException e) {
                             System.out.println("Invalid Pokemon: " + e.getMessage());
                         }
                         break;
@@ -190,7 +184,7 @@ public class Pokedex {
                 Type type = Type.valueOf(f[1].trim());
                 int maxHP = Integer.parseInt(f[2].trim());
                 loaded.add(new Pokemon(name, type, maxHP));
-            } catch (IllegalArgumentException | Pokedex.InvalidPokemonException e) {
+            } catch (IllegalArgumentException | InvalidPokemonException e) {
                 System.out.println("Skipping corrupted line: " + e.getMessage());
             }
         }
@@ -220,7 +214,7 @@ public class Pokedex {
                 Type type = Type.valueOf(f[4].trim());
                 owner.addAttack(new Attack(attackName, damage, accuracy, type));
 
-            } catch (IllegalArgumentException | Pokedex.InvalidPokemonException e) {
+            } catch (IllegalArgumentException | InvalidPokemonException e) {
                 System.out.println("Skipping corrupted line: " + e.getMessage());
             }
         }
@@ -282,7 +276,7 @@ public class Pokedex {
                 try {
                     edited.addAttack(new Attack(attackName, baseDamage, accuracy, edited.getType()));
                     System.out.println("Added " + attackName + " for " + edited.getName() + " with " + baseDamage + " damage");
-                } catch (Pokedex.InvalidPokemonException e) {
+                } catch (InvalidPokemonException e) {
                     System.out.println("Cant add this attack" + e.getMessage());
                 }
                 break;
@@ -299,7 +293,7 @@ public class Pokedex {
                 try {
                     Attack removedAttack = edited.removeAttack(pickAttack - 1);
                     System.out.println("Removed " + removedAttack.getName() + " from " + edited.getName());
-                } catch (Pokedex.InvalidPokemonException e) {
+                } catch (InvalidPokemonException e) {
                     System.out.println("Could not remove this attack: " + e.getMessage());
                 }
                 break;

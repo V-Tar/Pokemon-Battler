@@ -7,10 +7,10 @@ public class PokedexMenu {
             return;
         }
         for (Pokemon pokemon : pokemons) {
-            System.out.println("Name: " + pokemon.getName() + "  (" + pokemon.getType() + ")\n" + " - Max HP: " + pokemon.getMaxHP() + "\n" + " - Current HP: " + pokemon.getCurrentHP() + "\n" + " - Attacks:");
+            System.out.println("Name: " + pokemon.getName() + "  (" + pokemon.getType().getLabel() + ")\n" + " - Max HP: " + pokemon.getMaxHP() + "\n" + " - Current HP: " + pokemon.getCurrentHP() + "\n" + " - Attacks:");
 
             for (Attack attack : pokemon.getAttacks()) {
-                System.out.println(" -" + attack.getName() + " (Damage: " + attack.getBaseDamage() + ", Accuracy: " + attack.getAccuracy() + ", Type: " + attack.getType() + ")");
+                System.out.println(" -" + attack.getName() + " (Damage: " + attack.getBaseDamage() + ", Accuracy: " + attack.getAccuracy() + ", Type: " + attack.getType().getLabel() + ")");
             }
             System.out.println();
         }
