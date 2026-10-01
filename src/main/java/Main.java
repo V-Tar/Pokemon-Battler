@@ -43,7 +43,7 @@ public class Main {
                         break;
                     case 2:
                         String name = InputHelper.addString("Enter name: ", 20);
-                        while (FindPokemon(pokemons, name) != null) {
+                        while (pokedex.findByName(name) != null) {
                             System.out.println("A Pokemon named: " + name + " already exists");
                             name = InputHelper.addString("Enter a new name: ", 20);
                         }
@@ -64,7 +64,7 @@ public class Main {
 
                             Attack a = new Attack(attackName, baseDamage, accuracy, p.getType());
                             p.addAttack(a);
-                            pokemons.add(p); // Läggs till sist, så att en halvfärdig Pokemon aldrig hamnar i Pokedex
+                            pokedex.addPokemon(p); // Läggs till sist, så att en halvfärdig Pokemon aldrig hamnar i Pokedex
                             System.out.println("Added " + p.getName() + " with " + a.getName() + " to the Pokedex");
 
                         } catch (InvalidPokemonException e) {
