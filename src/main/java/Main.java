@@ -39,7 +39,7 @@ public class Main {
 
                 switch (choice) { // val 1-8
                     case 1:
-                        PokedexMenu.viewPokemons(pokemons);
+                        PokedexMenu.viewPokemons(pokedex);
                         break;
                     case 2:
                         String name = InputHelper.addString("Enter name: ", 20);
@@ -78,7 +78,7 @@ public class Main {
                         PokedexMenu.removePokemon(pokemons);
                         break;
                     case 5:
-                        savePokemons(pokemons);
+                        savePokemons(pokedex.getAll());
                         break;
                     case 6:
                         ArrayList<Pokemon> loaded = loadPokemons();
@@ -95,7 +95,7 @@ public class Main {
                         PokedexMenu.resetToSeeded(pokemons);
                         break;
                     case 8:
-                        savePokemons(pokemons);
+                        savePokemons(pokedex.getAll());
                         System.out.println("Exiting");
                         running = false;
                         break;
@@ -107,7 +107,7 @@ public class Main {
         } catch (NoSuchElementException e) { // här för att fånga CTRL+D så att programmet inte kraschar
             System.out.println();
             System.out.println("Input closed saving and exiting");
-            savePokemons(pokemons);
+            savePokemons(pokedex.getAll());
         }
     }
 
@@ -140,7 +140,7 @@ public class Main {
         return seeded;
     }
 
-    static void savePokemons(ArrayList<Pokemon> pokemons) {
+    static void savePokemons(List<Pokemon> pokemons) {
         List<String> lines = new ArrayList<>();
         for (Pokemon p : pokemons) {
             lines.add(p.getName() + "," + p.getType() + "," + p.getMaxHP() + "," + p.getCurrentHP());

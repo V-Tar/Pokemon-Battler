@@ -1,12 +1,12 @@
 import java.util.ArrayList;
 
 public class PokedexMenu {
-    static void viewPokemons(ArrayList<Pokemon> pokemons) {
-        if (pokemons.isEmpty()) {
+    static void viewPokemons(Pokedex pokedex) {
+        if (pokedex.isEmpty()) {
             System.out.println("No Pokemon");
             return;
         }
-        for (Pokemon pokemon : pokemons) {
+        for (Pokemon pokemon : pokedex.getAll()) {
             System.out.println("Name: " + pokemon.getName() + "  (" + pokemon.getType().getLabel() + ")\n" + " - Max HP: " + pokemon.getMaxHP() + "\n" + " - Current HP: " + pokemon.getCurrentHP() + "\n" + " - Attacks:");
 
             for (Attack attack : pokemon.getAttacks()) {

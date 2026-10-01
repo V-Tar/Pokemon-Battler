@@ -31,9 +31,18 @@ public class Pokedex {
         }
     }
 
+    public List<Pokemon> getAll() {
+        return new ArrayList<>(pokemons);
+    }
+
+    public boolean isEmpty() {
+        return pokemons.isEmpty();
+    }
+
     // Temporary solution
     public ArrayList<Pokemon> getList() {
         return pokemons;
     }
 }
+
 
