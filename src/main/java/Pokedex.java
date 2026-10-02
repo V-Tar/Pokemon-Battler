@@ -39,10 +39,16 @@ public class Pokedex {
         return pokemons.isEmpty();
     }
 
-    // Temporary solution
-    public ArrayList<Pokemon> getList() {
-        return pokemons;
+    public void remove(Pokemon p) {
+        pokemons.remove(p);
+    }
+
+    public void reName(Pokemon p, String newName) {
+        Pokemon existing = findByName(newName);
+        if (existing != null && !existing.equals(p)) {
+            throw new InvalidPokemonException("A Pokemon named " + newName + " already exists");
+        }
+        p.setName(newName);
     }
 }
-
 

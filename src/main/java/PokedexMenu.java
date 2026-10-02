@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class PokedexMenu {
     static void viewPokemons(Pokedex pokedex) {
@@ -16,21 +17,22 @@ public class PokedexMenu {
         }
     }
 
-    static void removePokemon(ArrayList<Pokemon> pokemons) {
-        if (pokemons.isEmpty()) {
+    static void removePokemon(Pokedex pokedex) {
+        if (pokedex.isEmpty()) {
             System.out.println("No Pokemon");
             return;
         }
-        for (int i = 0; i < pokemons.size(); i++) {
-            System.out.println(i + 1 + ". " + pokemons.get(i).getName());
+        List<Pokemon> list = pokedex.getAll();
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(i + 1 + ". " + list.get(i).getName());
         }
-        int pick = InputHelper.addInt("Pick the Pokemon you want to remove: ", 1, pokemons.size());
-        Pokemon removed = pokemons.remove(pick - 1);
+        int pick = InputHelper.addInt("Pick the Pokemon you want to remove: ", 1, list.size());
+        Pokemon removed = list.get(pick - 1);
+        pokedex.remove(removed);
         System.out.println("Removed " + removed.getName());
     }
-    static void resetToSeeded(ArrayList<Pokemon> pokemons) {
-        pokemons.clear();
-        pokemons.addAll(Main.seededData());
+    static void resetToSeeded(Pokedex pokedex) {
+        pokedex.replaceAll(Main.seededData());
         System.out.println("Reset to seeded data");
     }
 }

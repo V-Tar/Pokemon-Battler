@@ -1,9 +1,10 @@
-import java.util.ArrayList;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -19,7 +20,6 @@ public class Main {
 
         Pokedex pokedex = new Pokedex();
         pokedex.replaceAll(pokemons);
-        pokemons = pokedex.getList();
 
         try {
             while (running) { // main meny loop med olika val 1-8
@@ -72,10 +72,11 @@ public class Main {
                         }
                         break;
                     case 3:
-                        editPokemon(pokemons);
+                        editPokemon(pokedex);
+
                         break;
                     case 4:
-                        PokedexMenu.removePokemon(pokemons);
+                        PokedexMenu.removePokemon(pokedex);
                         break;
                     case 5:
                         savePokemons(pokedex.getAll());
@@ -87,12 +88,11 @@ public class Main {
                             System.out.println("No Pokemon saved");
                             break;
                         }
-                        pokemons.clear();
-                        pokemons.addAll(loaded);
+                        pokedex.replaceAll(loaded);
                         System.out.println("Loaded " + loaded.size() + " Pokemon");
                         break;
                     case 7:
-                        PokedexMenu.resetToSeeded(pokemons);
+                        PokedexMenu.resetToSeeded(pokedex);
                         break;
                     case 8:
                         savePokemons(pokedex.getAll());
@@ -230,16 +230,17 @@ public class Main {
         }
     }
 
-    static void editPokemon(ArrayList<Pokemon> pokemons) {
-        if (pokemons.isEmpty()) {
+    static void editPokemon(Pokedex pokedex) {
+        if (pokedex.isEmpty()) {
             System.out.println("No Pokemon");
             return;
         }
-        for (int i = 0; i < pokemons.size(); i++) {
-            System.out.println(i + 1 + " " + pokemons.get(i).getName());
+        List<Pokemon> list = pokedex.getAll();
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(i + 1 + ". " + list.get(i).getName());
         }
-        int pick = InputHelper.addInt("Pick a Pokemon to edit ", 1, pokemons.size());
-        Pokemon edited = pokemons.get(pick - 1); // fix så att listan inte startar från 0 men 1
+        int pick = InputHelper.addInt("Pick a Pokemon to edit ", 1, list.size());
+        Pokemon edited = list.get(pick - 1); // fix så att listan inte startar från 0 men 1
 
         System.out.println("1. Edit name");
         System.out.println("2. Edit type");
@@ -250,12 +251,16 @@ public class Main {
 
         switch (option) {
             case 1:
-                String newName = InputHelper.addString("Enter new name: ", 20);
-                while (!newName.equalsIgnoreCase(edited.getName()) && FindPokemon(pokemons, newName) != null) {
-                    System.out.println("A Pokemon named: " + newName + " already exists");
-                    newName = InputHelper.addString("Enter a new name: ", 20);
+                boolean renamed = false;
+                while (!renamed) {
+                    String newName = InputHelper.addString("New name: ", 20);
+                    try {
+                        pokedex.reName(edited, newName);
+                        renamed = true;
+                    } catch (InvalidPokemonException e) {
+                        System.out.println("Invalid Pokemon name: " + e.getMessage());
+                    }
                 }
-                edited.setName(newName);
                 break;
             case 2:
                 System.out.println("Types");
