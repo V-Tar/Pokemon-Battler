@@ -46,12 +46,15 @@ public class Attack {
         }
         this.type = type;
     }
+
     public int getBaseDamage() {
         return this.baseDamage;
     }
+
     public int getAccuracy() {
         return this.accuracy;
     }
+
     public Type getType() {
         return this.type;
     }

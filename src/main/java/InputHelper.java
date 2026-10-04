@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class InputHelper {
 
     private static Scanner input = new Scanner(System.in);
+
     // Crash proof scanner till meny
     public static int addInt(String prompt, int min, int max) {
         while (true) {
@@ -20,6 +21,7 @@ public class InputHelper {
             }
         }
     }
+
     // Tittar efter fel när man skriver in ett namn
     public static String addString(String prompt, int maxLength) {
         while (true) {

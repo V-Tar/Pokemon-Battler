@@ -69,6 +69,7 @@ public class Pokemon {
         }
         return attacks.remove(index);
     }
+
     public List<Attack> getAttacks() {
         return new ArrayList<>(attacks);
     }

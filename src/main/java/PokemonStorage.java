@@ -9,11 +9,12 @@ public class PokemonStorage {
     private final Path pokemonFile = Path.of("pokemons.csv");
     private final Path attackFile = Path.of("attacks.csv");
 
-    public  List<Pokemon> loadAll() {
+    public List<Pokemon> loadAll() {
         ArrayList<Pokemon> pokemons = loadPokemons();
         loadAttacks(pokemons);
         return pokemons;
     }
+
     public void savePokemons(List<Pokemon> pokemons) {
         List<String> lines = new ArrayList<>();
         for (Pokemon p : pokemons) {
