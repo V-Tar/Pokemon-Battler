@@ -1,6 +1,3 @@
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -9,8 +6,8 @@ public class Main {
 
     public static void main(String[] args) {
         boolean running = true;
-        ArrayList<Pokemon> pokemons = loadPokemons();
-        loadAttacks(pokemons);
+        PokemonStorage storage = new PokemonStorage();
+        List<Pokemon> pokemons = storage.loadAll();
         if (pokemons.isEmpty()) {
             pokemons = seededData();
             System.out.println("No saved Pokemon, using seeded data");
@@ -79,11 +76,10 @@ public class Main {
                         PokedexMenu.removePokemon(pokedex);
                         break;
                     case 5:
-                        savePokemons(pokedex.getAll());
+                        storage.savePokemons(pokedex.getAll());
                         break;
                     case 6:
-                        ArrayList<Pokemon> loaded = loadPokemons();
-                        loadAttacks(loaded);
+                        List<Pokemon> loaded = storage.loadAll();
                         if (loaded.isEmpty()) {
                             System.out.println("No Pokemon saved");
                             break;
@@ -95,7 +91,7 @@ public class Main {
                         PokedexMenu.resetToSeeded(pokedex);
                         break;
                     case 8:
-                        savePokemons(pokedex.getAll());
+                        storage.savePokemons(pokedex.getAll());
                         System.out.println("Exiting");
                         running = false;
                         break;
@@ -107,7 +103,7 @@ public class Main {
         } catch (NoSuchElementException e) { // här för att fånga CTRL+D så att programmet inte kraschar
             System.out.println();
             System.out.println("Input closed saving and exiting");
-            savePokemons(pokedex.getAll());
+            storage.savePokemons(pokedex.getAll());
         }
     }
 
@@ -138,96 +134,6 @@ public class Main {
         p6.addAttack(new Attack("Swiftness", 60, 100, Type.NORMAL));
         seeded.add(p6);
         return seeded;
-    }
-
-    static void savePokemons(List<Pokemon> pokemons) {
-        List<String> lines = new ArrayList<>();
-        for (Pokemon p : pokemons) {
-            lines.add(p.getName() + "," + p.getType() + "," + p.getMaxHP() + "," + p.getCurrentHP());
-        }
-        List<String> attackLines = new ArrayList<>();
-        for (Pokemon p : pokemons) {
-            for (Attack a : p.getAttacks()) {
-                attackLines.add(p.getName() + "," + a.getName() + "," + a.getBaseDamage() + "," + a.getAccuracy() + "," + a.getType());
-            }
-        }
-        try {
-            Files.write(Path.of("pokemons.csv"), lines);
-            Files.write(Path.of("attacks.csv"), attackLines);
-            System.out.println("Pokemons saved to file");
-        } catch (IOException e) {
-            System.out.println("Error saving pokemons: " + e.getMessage());
-        }
-    }
-
-    static List<String[]> load(Path path, int count) {
-        List<String[]> result = new ArrayList<>();
-        if (!Files.exists(path)) return result;
-        try {
-            for (String line : Files.readAllLines(path)) {
-                if (line.isBlank()) continue;
-                String[] f = line.split(",", -1);
-                if (f.length != count) {
-                    System.out.println("Skipping corrupted line: " + line);
-                    continue;
-                }
-                result.add(f);
-            }
-        } catch (IOException e) {
-            System.out.println("Could not read " + path + ". The file may be saved in the wrong text format.");
-        }
-        return result;
-    }
-
-    static ArrayList<Pokemon> loadPokemons() {
-        ArrayList<Pokemon> loaded = new ArrayList<>();
-        for (String[] f : load(Path.of("pokemons.csv"), 4)) {
-            try {
-                String name = f[0].trim();
-                Type type = Type.valueOf(f[1].trim());
-                int maxHP = Integer.parseInt(f[2].trim());
-                loaded.add(new Pokemon(name, type, maxHP));
-            } catch (IllegalArgumentException | InvalidPokemonException e) {
-                System.out.println("Skipping corrupted line: " + e.getMessage());
-            }
-        }
-        return loaded;
-    }
-
-    static Pokemon FindPokemon(ArrayList<Pokemon> pokemons, String name) {
-        for (Pokemon p : pokemons) {
-            if (p.getName().equalsIgnoreCase(name)) {
-                return p;
-            }
-        }
-        return null;
-    }
-
-    static void loadAttacks(ArrayList<Pokemon> pokemons) {
-        for (String[] f : load(Path.of("attacks.csv"), 5)) {
-            try {
-                Pokemon owner = FindPokemon(pokemons, f[0].trim());
-                if (owner == null) {
-                    System.out.println("No Pokemon named " + f[0].trim() + " found");
-                    continue;
-                }
-                String attackName = f[1].trim();
-                int damage = Integer.parseInt(f[2].trim());
-                int accuracy = Integer.parseInt(f[3].trim());
-                Type type = Type.valueOf(f[4].trim());
-                owner.addAttack(new Attack(attackName, damage, accuracy, type));
-
-            } catch (IllegalArgumentException | InvalidPokemonException e) {
-                System.out.println("Skipping corrupted line: " + e.getMessage());
-            }
-        }
-
-        for (int i = pokemons.size() - 1; i >= 0; i--) {
-            if (pokemons.get(i).getAttacks().isEmpty()) {
-                System.out.println("Skipping " + pokemons.get(i).getName() + " no valid attacks");
-                pokemons.remove(i);
-            }
-        }
     }
 
     static void editPokemon(Pokedex pokedex) {
