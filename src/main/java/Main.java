@@ -19,7 +19,7 @@ public class Main {
         pokedex.replaceAll(pokemons);
 
         try {
-            while (running) { // main meny loop med olika val 1-8
+            while (running) { // main meny loop med olika val 1-9
                 System.out.println();
 
                 System.out.println("--Pokedex menu!--");
@@ -30,9 +30,10 @@ public class Main {
                 System.out.println("5. Save to file");
                 System.out.println("6. Load from file");
                 System.out.println("7. Reset seeded data");
-                System.out.println("8. Exit");
+                System.out.println("8. Battle");
+                System.out.println("9. Exit");
 
-                int choice = InputHelper.addInt("Enter your choice: ", 1, 8);
+                int choice = InputHelper.addInt("Enter your choice: ", 1, 9);
 
                 switch (choice) { // val 1-8
                     case 1:
@@ -64,10 +65,14 @@ public class Main {
                         PokedexMenu.resetToSeeded(pokedex);
                         break;
                     case 8:
+                        PokedexMenu.startBattle(pokedex);
+                        break;
+                    case 9:
                         storage.savePokemons(pokedex.getAll());
                         System.out.println("Exiting");
                         running = false;
                         break;
+
                 }
                 if (running) {
                     InputHelper.menuPause();

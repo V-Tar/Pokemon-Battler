@@ -139,4 +139,22 @@ public class PokedexMenu {
         int pickType = InputHelper.addInt("Pick type: ", 1, Type.values().length);
         return Type.values()[pickType - 1];
     }
+    static void startBattle(Pokedex pokedex) {
+        System.out.println("Battle"); // temp
+        if (pokedex.isEmpty()) {
+            System.out.println("No Pokemon available for battle");
+            return;
+        }
+        Pokemon player = pickPokemon(pokedex,"Pick a pokemon to battle!: ");
+        System.out.println("You picked " + player.getName()); // temp
+    }
+
+    static Pokemon pickPokemon(Pokedex pokedex, String prompt) {
+        List<Pokemon> list = pokedex.getAll();
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(i + 1 + ". " + list.get(i).getName());
+        }
+        int pick = InputHelper.addInt(prompt, 1, list.size());
+        return list.get(pick - 1);
+    }
 }
