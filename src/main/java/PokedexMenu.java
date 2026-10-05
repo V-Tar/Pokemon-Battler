@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Random;
 
 public class PokedexMenu {
     static void viewPokemons(Pokedex pokedex) {
@@ -21,12 +22,7 @@ public class PokedexMenu {
             System.out.println("No Pokemon");
             return;
         }
-        List<Pokemon> list = pokedex.getAll();
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(i + 1 + ". " + list.get(i).getName());
-        }
-        int pick = InputHelper.addInt("Pick the Pokemon you want to remove: ", 1, list.size());
-        Pokemon removed = list.get(pick - 1);
+        Pokemon removed = pickPokemon(pokedex, "Pick a Pokemon to remove: ");
         pokedex.remove(removed);
         System.out.println("Removed " + removed.getName());
     }
@@ -41,17 +37,12 @@ public class PokedexMenu {
             System.out.println("No Pokemon");
             return;
         }
-        List<Pokemon> list = pokedex.getAll();
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(i + 1 + ". " + list.get(i).getName());
-        }
-        int pick = InputHelper.addInt("Pick a Pokemon to edit ", 1, list.size());
-        Pokemon edited = list.get(pick - 1); // fix så att listan inte startar från 0 men 1
+        Pokemon edited = pickPokemon(pokedex, "Pick a Pokemon to edit: ");
 
         System.out.println("1. Edit name");
         System.out.println("2. Edit type");
         System.out.println("3. Edit maxHP");
-        System.out.println("4. Edit attacks");
+        System.out.println("4. Add attack");
         System.out.println("5. Remove attacks");
         int option = InputHelper.addInt("Pick an option: ", 1, 5);
 
@@ -69,7 +60,7 @@ public class PokedexMenu {
                 }
                 break;
             case 2:
-               edited.setType(pickType());
+                edited.setType(pickType());
                 break;
             case 3:
                 edited.setMaxHP(InputHelper.addInt("New max HP: ", 1, 100));
@@ -79,14 +70,14 @@ public class PokedexMenu {
                     System.out.println("Pokemon already has 4 attacks");
                     break;
                 }
-                String attackName = InputHelper.addString("New Attack Name ", 20);
+                String attackName = InputHelper.addString("New attack name: ", 20);
                 int baseDamage = InputHelper.addInt("Base Damage: ", 1, 100);
                 int accuracy = InputHelper.addInt("Accuracy: ", 0, 100);
                 try {
                     edited.addAttack(new Attack(attackName, baseDamage, accuracy, edited.getType()));
                     System.out.println("Added " + attackName + " for " + edited.getName() + " with " + baseDamage + " damage");
                 } catch (InvalidPokemonException e) {
-                    System.out.println("Cant add this attack" + e.getMessage());
+                    System.out.println("Cant add this attack: " + e.getMessage());
                 }
                 break;
             case 5:
@@ -98,7 +89,7 @@ public class PokedexMenu {
                 for (int i = 0; i < attacks.size(); i++) {
                     System.out.println(i + 1 + ". " + attacks.get(i).getName());
                 }
-                int pickAttack = InputHelper.addInt("Pick an Attack to remove", 1, attacks.size());
+                int pickAttack = InputHelper.addInt("Pick an attack to remove: ", 1, attacks.size());
                 try {
                     Attack removedAttack = edited.removeAttack(pickAttack - 1);
                     System.out.println("Removed " + removedAttack.getName() + " from " + edited.getName());
@@ -131,6 +122,7 @@ public class PokedexMenu {
             System.out.println("Invalid Pokemon: " + e.getMessage());
         }
     }
+
     static Type pickType() {
         System.out.println("Types");
         for (int i = 0; i < Type.values().length; i++) {
@@ -139,14 +131,19 @@ public class PokedexMenu {
         int pickType = InputHelper.addInt("Pick type: ", 1, Type.values().length);
         return Type.values()[pickType - 1];
     }
+
     static void startBattle(Pokedex pokedex) {
-        System.out.println("Battle"); // temp
         if (pokedex.isEmpty()) {
             System.out.println("No Pokemon available for battle");
             return;
         }
-        Pokemon player = pickPokemon(pokedex,"Pick a pokemon to battle!: ");
-        System.out.println("You picked " + player.getName()); // temp
+        Pokemon player = pickPokemon(pokedex, "Pick a pokemon to battle!: ");
+        List<Pokemon> wildPool = Main.seededData();
+        Random random = new Random();
+        int index = random.nextInt(wildPool.size());
+        Pokemon wild = wildPool.get(index);
+        System.out.println("The wild " + wild.getName() + " has appeared!");
+
     }
 
     static Pokemon pickPokemon(Pokedex pokedex, String prompt) {
