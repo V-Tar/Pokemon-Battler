@@ -50,5 +50,10 @@ public class Pokedex {
         }
         p.setName(newName);
     }
+    public void healAll() {
+        for (Pokemon p : pokemons) {
+            p.heal();
+        }
+    }
 }
 

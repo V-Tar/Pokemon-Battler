@@ -138,6 +138,15 @@ public class PokedexMenu {
             return;
         }
         Pokemon player = pickPokemon(pokedex, "Pick a pokemon to battle!: ");
+        if (player.isFainted()) {
+
+        System.out.println(player.getName() + " has fainted and cant battle. Heal it first");
+        return;
+        }
+        if  (player.getAttacks().isEmpty()) {
+            System.out.println(player.getName() + " has no attacks. Add some first");
+            return;
+        }
         List<Pokemon> wildPool = Main.seededData();
         Random random = new Random();
         int index = random.nextInt(wildPool.size());

@@ -77,6 +77,12 @@ public class Pokemon {
         attacks.add(attack);
     }
 
+    public void heal() {
+        if (currentHP < maxHP) {
+            currentHP = maxHP;
+        }
+    }
+
     public Attack removeAttack(int index) {
         if (attacks.size() <= 1) {
             throw new InvalidPokemonException("Pokemon must have at least 1 attack");
