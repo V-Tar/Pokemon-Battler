@@ -40,21 +40,38 @@ public class Pokemon {
         this.name = trimmedName;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return this.name;
     }
+
     public Type getType() {
         return this.type;
     }
+
     public int getMaxHP() {
         return this.maxHP;
     }
+
     public int getCurrentHP() {
         return this.currentHP;
     }
+
+    public void takeDamage(int amount) {
+        if (amount < 0) {
+            throw new InvalidPokemonException("Damage can not be negative");
+        }
+        currentHP -= amount;
+        if (currentHP <= 0) {
+            currentHP = 0;
+        }
+    }
+
+    public boolean isFainted() {
+        return currentHP <= 0;
+    }
+
     public void addAttack(Attack attack) {
-        if (attacks.size() >=4) {
+        if (attacks.size() >= 4) {
             throw new InvalidPokemonException("Pokemon can only have 4 attacks");
         }
         attacks.add(attack);

@@ -144,6 +144,16 @@ public class PokedexMenu {
         Pokemon wild = wildPool.get(index);
         System.out.println("The wild " + wild.getName() + " has appeared!");
 
+        Trainer playerTrainer = new PlayerTrainer(player);
+        Trainer cpuTrainer = new CpuTrainer(wild);
+        Battle battle = new Battle(playerTrainer, cpuTrainer);
+        boolean won = battle.runBattle();
+        if (won) {
+            System.out.println("You won!");
+        } else {
+            System.out.println("You lost!");
+        }
+
     }
 
     static Pokemon pickPokemon(Pokedex pokedex, String prompt) {
