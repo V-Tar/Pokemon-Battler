@@ -16,4 +16,9 @@ public class PlayerTrainer extends Trainer {
         int pick = InputHelper.addInt("Choose an attack: ", 1, list.size());
         return list.get(pick - 1);
     }
+
+    @Override
+    public String getDisplayName() {
+        return "Your " + getPokemon().getName();
+    }
 }

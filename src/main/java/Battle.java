@@ -20,8 +20,8 @@ public class Battle {
             attacker = cpu;
             defender = player;
         }
-        System.out.println("Battle between " + attacker.getPokemon().getName() + " and " + defender.getPokemon().getName());
-        System.out.println(attacker.getPokemon().getName() + " goes first!");
+        System.out.println(player.getDisplayName() + " vs " + cpu.getDisplayName());
+        System.out.println(attacker.getDisplayName() + " goes first!");
 
 
         int turn = 1;
@@ -30,9 +30,9 @@ public class Battle {
 
             Attack attack = attacker.chooseAttack();
             int damage = Math.max(1, attack.getBaseDamage() / 3 );
-            System.out.println(attacker.getPokemon().getName() + " used " + attack.getName() + " for " + damage + " damage!");
+            System.out.println(attacker.getDisplayName() + " used " + attack.getName() + " for " + damage + " damage!");
             defender.getPokemon().takeDamage(damage);
-            System.out.println(defender.getPokemon().getName() + " has " + defender.getPokemon().getCurrentHP() + " HP left!");
+            System.out.println(defender.getDisplayName() + " has " + defender.getPokemon().getCurrentHP() + " HP left!");
 
             Trainer temp = attacker;
             attacker = defender;

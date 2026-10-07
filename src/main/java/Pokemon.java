@@ -70,17 +70,24 @@ public class Pokemon {
         return currentHP <= 0;
     }
 
+    public void heal() {
+        if (currentHP < maxHP) {
+            currentHP = maxHP;
+        }
+    }
+
+    public void setCurrentHP(int currentHP) {
+        if (currentHP < 0 || currentHP > maxHP) {
+            throw new InvalidPokemonException("Current HP must be between 0 and max HP");
+        }
+        this.currentHP = currentHP;
+    }
+
     public void addAttack(Attack attack) {
         if (attacks.size() >= 4) {
             throw new InvalidPokemonException("Pokemon can only have 4 attacks");
         }
         attacks.add(attack);
-    }
-
-    public void heal() {
-        if (currentHP < maxHP) {
-            currentHP = maxHP;
-        }
     }
 
     public Attack removeAttack(int index) {

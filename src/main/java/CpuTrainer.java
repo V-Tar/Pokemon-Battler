@@ -13,4 +13,10 @@ public class CpuTrainer extends Trainer {
         List<Attack> attacks = getPokemon().getAttacks();
         return attacks.get(random.nextInt(attacks.size()));
     }
+
+
+    @Override
+    public String getDisplayName() {
+        return "Wild " + getPokemon().getName();
+    }
 }

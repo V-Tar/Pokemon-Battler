@@ -11,5 +11,6 @@ public abstract class Trainer {
 
     public abstract Attack chooseAttack();
 
+    public abstract String getDisplayName();
 
 }

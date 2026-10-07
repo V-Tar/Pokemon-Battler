@@ -151,7 +151,7 @@ public class PokedexMenu {
         Random random = new Random();
         int index = random.nextInt(wildPool.size());
         Pokemon wild = wildPool.get(index);
-        System.out.println("The wild " + wild.getName() + " has appeared!");
+        System.out.println("A wild " + wild.getName() + " has appeared!");
 
         Trainer playerTrainer = new PlayerTrainer(player);
         Trainer cpuTrainer = new CpuTrainer(wild);

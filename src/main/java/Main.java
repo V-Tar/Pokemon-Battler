@@ -69,7 +69,7 @@ public class Main {
                         PokedexMenu.startBattle(pokedex);
                         break;
                     case 9:
-                        pokedex.healAll();
+                        pokedex.healAll();   // temp kanske
                         System.out.println("All Pokemon fully healed");
                         break;
                     case 10:

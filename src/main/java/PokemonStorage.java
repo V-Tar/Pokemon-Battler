@@ -61,7 +61,10 @@ public class PokemonStorage {
                 String name = f[0].trim();
                 Type type = Type.valueOf(f[1].trim());
                 int maxHP = Integer.parseInt(f[2].trim());
-                loaded.add(new Pokemon(name, type, maxHP));
+                int currentHP = Integer.parseInt(f[3].trim());
+                Pokemon p = new Pokemon(name, type, maxHP);
+                p.setCurrentHP(currentHP);
+                loaded.add(p);
             } catch (IllegalArgumentException | InvalidPokemonException e) {
                 System.out.println("Skipping corrupted line: " + e.getMessage());
             }
