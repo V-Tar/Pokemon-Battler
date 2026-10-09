@@ -95,27 +95,33 @@ public class Main {
         ArrayList<Pokemon> seeded = new ArrayList<>();
 
         Pokemon p1 = new Pokemon("Bulbasaur", Type.GRASS, 45);
-        p1.addAttack(new Attack("Vine Whip", 25, 100, Type.GRASS));
+        p1.addAttack(new Attack("Vine Whip", 30, 95, Type.GRASS));
+        p1.addAttack(new Attack("Razor leaf", 55, 80, Type.GRASS));
         seeded.add(p1);
 
-        Pokemon p2 = new Pokemon("Charmander", Type.FIRE, 30);
-        p2.addAttack(new Attack("Flamethrower", 50, 100, Type.FIRE));
+        Pokemon p2 = new Pokemon("Charmander", Type.FIRE, 39);
+        p2.addAttack(new Attack("Embers", 35, 95, Type.FIRE));
+        p2.addAttack(new Attack("Flamethrower", 60, 80, Type.FIRE));
         seeded.add(p2);
 
         Pokemon p3 = new Pokemon("Squirtle", Type.WATER, 44);
-        p3.addAttack(new Attack("Water Gun", 40, 100, Type.WATER));
+        p3.addAttack(new Attack("Water Gun", 35, 95, Type.WATER));
+        p3.addAttack(new Attack("Hydro Pump", 65, 70, Type.WATER));
         seeded.add(p3);
 
         Pokemon p4 = new Pokemon("Pikachu", Type.ELECTRIC, 35);
-        p4.addAttack(new Attack("Thunderbolt", 90, 100, Type.ELECTRIC));
+        p4.addAttack(new Attack("Thunder Shock", 35, 95, Type.ELECTRIC));
+        p4.addAttack(new Attack("Thunderbolt", 70, 70, Type.ELECTRIC));
         seeded.add(p4);
 
         Pokemon p5 = new Pokemon("Pidgey", Type.NORMAL, 40);
-        p5.addAttack(new Attack("Quick attack", 40, 100, Type.NORMAL));
+        p5.addAttack(new Attack("Quick attack", 30, 100, Type.NORMAL));
+        p5.addAttack(new Attack("Take Down", 55, 80, Type.NORMAL));
         seeded.add(p5);
 
         Pokemon p6 = new Pokemon("Eevee", Type.NORMAL, 55);
-        p6.addAttack(new Attack("Swiftness", 60, 100, Type.NORMAL));
+        p6.addAttack(new Attack("Swiftness", 30, 100, Type.NORMAL));
+        p6.addAttack(new Attack("Last Resort", 70, 70, Type.NORMAL));
         seeded.add(p6);
         return seeded;
     }

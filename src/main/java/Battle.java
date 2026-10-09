@@ -30,26 +30,32 @@ public class Battle {
             System.out.println("---Turn " + turn + " ---");
 
             Attack attack = attacker.chooseAttack();
-            double multiplier = typeChart.getMultiplier(attack.getType(), defender.getPokemon().getType());
-            int damage = Math.max(1, (int) (attack.getBaseDamage() / 3.0 * multiplier));
-            System.out.println(attacker.getDisplayName() + " used " + attack.getName() + " for " + damage + " damage!");
-            if (multiplier > 1) {
-                System.out.println("It's super effective! (" + multiplier + "x)");
-            }
-            else if (multiplier < 1) {
-                System.out.println("It's not very effective! (" + multiplier + "x)");
-            }
+            boolean hit = random.nextInt(100) < attack.getAccuracy();
+            if (!hit) {
+                System.out.println(attacker.getDisplayName() + " used " + attack.getName() + " but missed!");
 
-            defender.getPokemon().takeDamage(damage);
-            System.out.println(defender.getDisplayName() + " has " + defender.getPokemon().getCurrentHP() + " HP left!");
+            } else {
+
+                double multiplier = typeChart.getMultiplier(attack.getType(), defender.getPokemon().getType());
+                double randomFactor = 0.85 + random.nextDouble() * 0.15;
+                int damage = Math.max(1, (int) (attack.getBaseDamage() / 3.0 * multiplier * randomFactor));
+                System.out.println(attacker.getDisplayName() + " used " + attack.getName() + " for " + damage + " damage!");
+                if (multiplier > 1) {
+                    System.out.println("It's super effective! (" + multiplier + "x)");
+                } else if (multiplier < 1) {
+                    System.out.println("It's not very effective! (" + multiplier + "x)");
+                }
+
+                defender.getPokemon().takeDamage(damage);
+                System.out.println(defender.getDisplayName() + " has " + defender.getPokemon().getCurrentHP() + " HP left!");
+            }
 
             Trainer temp = attacker;
             attacker = defender;
             defender = temp;
             turn++;
         }
+
         return cpu.getPokemon().isFainted();
     }
-
 }
-        
