@@ -8,6 +8,7 @@ public class PokemonStorage {
 
     private final Path pokemonFile = Path.of("pokemons.csv");
     private final Path attackFile = Path.of("attacks.csv");
+    private final Path statsFile = Path.of("stats.csv");
 
     public List<Pokemon> loadAll() {
         ArrayList<Pokemon> pokemons = loadPokemons();
@@ -107,4 +108,28 @@ public class PokemonStorage {
             }
         }
     }
+    public void saveStats(BattleStats stats) {
+        String line = stats.getWins() + "," + stats.getLosses();
+        try {
+            Files.write(statsFile, List.of(line));
+        } catch (IOException e) {
+            System.out.println("Error saving stats: " + e.getMessage());
+        }
+    }
+    public BattleStats loadStats() {
+        List<String[]> rows = load(statsFile, 2);
+        if (rows.isEmpty()) {
+            return new BattleStats(0, 0);
+        }
+        String[] f = rows.get(0);
+        try {
+            int wins = Integer.parseInt(f[0].trim());
+            int losses = Integer.parseInt(f[1].trim());
+            return new BattleStats(wins, losses);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error loading stats: " + e.getMessage());
+            return new BattleStats(0, 0);
+        }
+    }
+
 }
