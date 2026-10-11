@@ -1,3 +1,5 @@
+package pokemonbattler.model;
+
 public class Attack {
     private String name;
     private int baseDamage;

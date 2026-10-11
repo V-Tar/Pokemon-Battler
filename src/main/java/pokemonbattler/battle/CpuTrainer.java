@@ -1,3 +1,8 @@
+package pokemonbattler.battle;
+
+import pokemonbattler.model.Attack;
+import pokemonbattler.model.Pokemon;
+
 import java.util.List;
 import java.util.Random;
 

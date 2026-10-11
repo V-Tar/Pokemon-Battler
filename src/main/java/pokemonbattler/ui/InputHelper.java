@@ -1,3 +1,5 @@
+package pokemonbattler.ui;
+
 import java.util.Scanner;
 
 public class InputHelper {

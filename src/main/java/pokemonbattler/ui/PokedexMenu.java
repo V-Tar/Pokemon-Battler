@@ -1,8 +1,14 @@
+package pokemonbattler.ui;
+
+import pokemonbattler.battle.*;
+import pokemonbattler.Main;
+import pokemonbattler.model.*;
+
 import java.util.List;
 import java.util.Random;
 
 public class PokedexMenu {
-    static void viewPokemons(Pokedex pokedex) {
+    public static void viewPokemons(Pokedex pokedex) {
         if (pokedex.isEmpty()) {
             System.out.println("No Pokemon");
             return;
@@ -17,7 +23,7 @@ public class PokedexMenu {
         }
     }
 
-    static void removePokemon(Pokedex pokedex) {
+    public static void removePokemon(Pokedex pokedex) {
         if (pokedex.isEmpty()) {
             System.out.println("No Pokemon");
             return;
@@ -27,12 +33,13 @@ public class PokedexMenu {
         System.out.println("Removed " + removed.getName());
     }
 
-    static void resetToSeeded(Pokedex pokedex) {
+    public static void resetToSeeded(Pokedex pokedex, BattleStats stats) {
         pokedex.replaceAll(Main.seededData());
-        System.out.println("Reset to seeded data");
+        stats.reset();
+        System.out.println("Reset to seeded data and cleared stats");
     }
 
-    static void editPokemon(Pokedex pokedex) {
+    public static void editPokemon(Pokedex pokedex) {
         if (pokedex.isEmpty()) {
             System.out.println("No Pokemon");
             return;
@@ -100,7 +107,7 @@ public class PokedexMenu {
         }
     }
 
-    static void addPokemon(Pokedex pokedex) {
+    public static void addPokemon(Pokedex pokedex) {
         String name = InputHelper.addString("Enter name: ", 20);
         while (pokedex.findByName(name) != null) {
             System.out.println("A Pokemon named: " + name + " already exists");
@@ -132,7 +139,7 @@ public class PokedexMenu {
         return Type.values()[pickType - 1];
     }
 
-    static void startBattle(Pokedex pokedex, BattleStats stats) {
+   public static void startBattle(Pokedex pokedex, BattleStats stats) {
         if (pokedex.isEmpty()) {
             System.out.println("No Pokemon available for battle");
             return;
@@ -177,7 +184,7 @@ public class PokedexMenu {
         return list.get(pick - 1);
     }
 
-    static void showStats(BattleStats stats) {
+  public static void showStats(BattleStats stats) {
         if (stats.getWins() + stats.getLosses() == 0) {
             System.out.println("No Battles fought");
             return;

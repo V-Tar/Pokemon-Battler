@@ -1,3 +1,13 @@
+package pokemonbattler;
+import pokemonbattler.battle.BattleStats;
+import pokemonbattler.model.Attack;
+import pokemonbattler.model.Pokedex;
+import pokemonbattler.model.Pokemon;
+import pokemonbattler.model.Type;
+import pokemonbattler.storage.PokemonStorage;
+import pokemonbattler.ui.InputHelper;
+import pokemonbattler.ui.PokedexMenu;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -72,10 +82,11 @@ public class Main {
                             break;
                         }
                         pokedex.replaceAll(loaded);
-                        System.out.println("Loaded " + loaded.size() + " Pokemon");
+                        stats = storage.loadStats();
+                        System.out.println("Loaded " + loaded.size() + " Pokemon and battle results");
                         break;
                     case 10:
-                        PokedexMenu.resetToSeeded(pokedex);
+                        PokedexMenu.resetToSeeded(pokedex, stats);
                         break;
                     case 11:
                         storage.savePokemons(pokedex.getAll());
@@ -96,7 +107,7 @@ public class Main {
         }
     }
 
-    static ArrayList<Pokemon> seededData() {
+     public static ArrayList<Pokemon> seededData() {
         ArrayList<Pokemon> seeded = new ArrayList<>();
 
         Pokemon p1 = new Pokemon("Bulbasaur", Type.GRASS, 45);

@@ -1,3 +1,10 @@
+package pokemonbattler.storage;
+import pokemonbattler.battle.BattleStats;
+import pokemonbattler.model.Attack;
+import pokemonbattler.model.InvalidPokemonException;
+import pokemonbattler.model.Pokemon;
+import pokemonbattler.model.Type;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;

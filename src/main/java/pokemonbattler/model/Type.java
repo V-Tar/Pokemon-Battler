@@ -1,3 +1,5 @@
+package pokemonbattler.model;
+
 public enum Type {
     FIRE("Fire"),
     WATER("Water"),

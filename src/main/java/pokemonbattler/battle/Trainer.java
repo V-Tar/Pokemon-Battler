@@ -1,3 +1,8 @@
+package pokemonbattler.battle;
+
+import pokemonbattler.model.Attack;
+import pokemonbattler.model.Pokemon;
+
 public abstract class Trainer {
     private final Pokemon pokemon;
 

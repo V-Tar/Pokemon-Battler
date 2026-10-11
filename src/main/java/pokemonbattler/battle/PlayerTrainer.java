@@ -1,3 +1,9 @@
+package pokemonbattler.battle;
+
+import pokemonbattler.model.Attack;
+import pokemonbattler.model.Pokemon;
+import pokemonbattler.ui.InputHelper;
+
 import java.util.List;
 
 public class PlayerTrainer extends Trainer {

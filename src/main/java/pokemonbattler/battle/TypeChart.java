@@ -1,3 +1,7 @@
+package pokemonbattler.battle;
+
+import pokemonbattler.model.Type;
+
 import java.util.EnumMap;
 import java.util.Map;
 

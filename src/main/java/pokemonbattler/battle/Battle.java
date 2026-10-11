@@ -1,4 +1,7 @@
-import java.io.IOException;
+package pokemonbattler.battle;
+
+import pokemonbattler.model.Attack;
+
 import java.util.Random;
 
 public class Battle {

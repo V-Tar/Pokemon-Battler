@@ -1,3 +1,5 @@
+package pokemonbattler.model;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +48,7 @@ public class Pokedex {
     public void reName(Pokemon p, String newName) {
         Pokemon existing = findByName(newName);
         if (existing != null && !existing.equals(p)) {
-            throw new InvalidPokemonException("A Pokemon named " + newName + " already exists");
+            throw new InvalidPokemonException("Pokemon named " + newName + " already exists");
         }
         p.setName(newName);
     }
