@@ -132,7 +132,7 @@ public class PokedexMenu {
         return Type.values()[pickType - 1];
     }
 
-    static void startBattle(Pokedex pokedex) {
+    static void startBattle(Pokedex pokedex, BattleStats stats) {
         if (pokedex.isEmpty()) {
             System.out.println("No Pokemon available for battle");
             return;
@@ -140,10 +140,10 @@ public class PokedexMenu {
         Pokemon player = pickPokemon(pokedex, "Pick a pokemon to battle!: ");
         if (player.isFainted()) {
 
-        System.out.println(player.getName() + " has fainted and cant battle. Heal it first");
-        return;
+            System.out.println(player.getName() + " has fainted and cant battle. Heal it first");
+            return;
         }
-        if  (player.getAttacks().isEmpty()) {
+        if (player.getAttacks().isEmpty()) {
             System.out.println(player.getName() + " has no attacks. Add some first");
             return;
         }
@@ -159,9 +159,12 @@ public class PokedexMenu {
         boolean won = battle.runBattle();
         if (won) {
             System.out.println("You won!");
+            stats.recordWin();
         } else {
             System.out.println("You lost!");
+            stats.recordLoss();
         }
+
 
     }
 
@@ -172,5 +175,13 @@ public class PokedexMenu {
         }
         int pick = InputHelper.addInt(prompt, 1, list.size());
         return list.get(pick - 1);
+    }
+
+    static void showStats(BattleStats stats) {
+        if (stats.getWins() + stats.getLosses() == 0) {
+            System.out.println("No Battles fought");
+            return;
+        }
+        System.out.println("Wins: " + stats.getWins() + " Losses: " + stats.getLosses());
     }
 }
