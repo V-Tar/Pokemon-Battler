@@ -138,6 +138,30 @@ public class PokedexMenu {
         int pickType = InputHelper.addInt("Pick type: ", 1, Type.values().length);
         return Type.values()[pickType - 1];
     }
+    public static void battleMenu(Pokedex pokedex, BattleStats stats) {
+        System.out.println();
+        System.out.println("--Battle Menu--");
+        System.out.println("1. Start a battle");
+        System.out.println("2. View stats");
+        System.out.println("3. Heal all Pokemon");
+        System.out.println("4. Go back");
+        int option = InputHelper.addInt("Pick an option: ", 1, 4);
+        switch (option) {
+            case 1:
+                startBattle(pokedex, stats);
+                break;
+            case 2:
+                showStats(stats);
+                break;
+            case 3:
+                pokedex.healAll();
+                System.out.println("All Pokemon fully healed");
+                break;
+            case 4:
+                //back
+                break;
+        }
+    }
 
    public static void startBattle(Pokedex pokedex, BattleStats stats) {
         if (pokedex.isEmpty()) {
