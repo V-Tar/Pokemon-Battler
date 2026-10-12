@@ -4,7 +4,7 @@ import pokemonbattler.model.Attack;
 import pokemonbattler.model.Pokedex;
 import pokemonbattler.model.Pokemon;
 import pokemonbattler.model.Type;
-import pokemonbattler.storage.PokemonStorage;
+import pokemonbattler.repository.PokemonStorage;
 import pokemonbattler.ui.InputHelper;
 import pokemonbattler.ui.PokedexMenu;
 

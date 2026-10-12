@@ -1,4 +1,6 @@
-package pokemonbattler.storage;
+package pokemonbattler.repository;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import pokemonbattler.battle.BattleStats;
 import pokemonbattler.model.Attack;
 import pokemonbattler.model.InvalidPokemonException;
@@ -15,7 +17,8 @@ public class PokemonStorage {
 
     private final Path pokemonFile = Path.of("pokemons.csv");
     private final Path attackFile = Path.of("attacks.csv");
-    private final Path statsFile = Path.of("stats.csv");
+    private final Path statsFile = Path.of("stats.json");
+    private final ObjectMapper mapper = new ObjectMapper();
 
     public List<Pokemon> loadAll() {
         ArrayList<Pokemon> pokemons = loadPokemons();
@@ -115,28 +118,29 @@ public class PokemonStorage {
             }
         }
     }
+
     public void saveStats(BattleStats stats) {
-        String line = stats.getWins() + "," + stats.getLosses();
+        StatsData data = new StatsData(stats.getWins(), stats.getLosses());
         try {
-            Files.write(statsFile, List.of(line));
+            mapper.writerWithDefaultPrettyPrinter().writeValue(statsFile.toFile(), data);
         } catch (IOException e) {
-            System.out.println("Error saving stats: " + e.getMessage());
-        }
-    }
-    public BattleStats loadStats() {
-        List<String[]> rows = load(statsFile, 2);
-        if (rows.isEmpty()) {
-            return new BattleStats(0, 0);
-        }
-        String[] f = rows.get(0);
-        try {
-            int wins = Integer.parseInt(f[0].trim());
-            int losses = Integer.parseInt(f[1].trim());
-            return new BattleStats(wins, losses);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error loading stats: " + e.getMessage());
-            return new BattleStats(0, 0);
+            System.out.println("Error saving stats to stats.json");
         }
     }
 
+    public BattleStats loadStats() {
+        if (!Files.exists(statsFile)) {
+            return new BattleStats(0, 0);
+        }
+        try {
+            StatsData data = mapper.readValue(statsFile.toFile(), StatsData.class);
+            if (data == null) {
+                return new BattleStats(0, 0);
+            }
+            return new BattleStats(data.wins(), data.losses());
+        } catch (IOException | IllegalArgumentException e) {
+            System.out.println("Could not read stats.json, starting with no stat history");
+            return new BattleStats(0, 0);
+        }
+    }
 }
