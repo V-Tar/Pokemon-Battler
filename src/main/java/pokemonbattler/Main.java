@@ -30,22 +30,20 @@ public class Main {
         BattleStats stats = storage.loadStats();
 
         try {
-            while (running) { // main meny loop med olika val 1-9.
+            while (running) { // main meny loop med olika val 1-7.
                 System.out.println();
                 System.out.println("--Pokedex menu!--");
                 System.out.println("1. View Pokemon");
-                System.out.println("2. Manage Battles ");
-                System.out.println("3. Add a Pokemon");
-                System.out.println("4. Edit a Pokemon");
-                System.out.println("5. Remove Pokemon");
-                System.out.println("6. Save to file");
-                System.out.println("7. Load from file");
-                System.out.println("8. Reset seeded data");
-                System.out.println("9. Save and exit");
+                System.out.println("2. Manage Battles");
+                System.out.println("3. Manage Pokemon");
+                System.out.println("4. Save to file");
+                System.out.println("5. Load from file");
+                System.out.println("6. Reset seeded data");
+                System.out.println("7. Save and exit");
 
-                int choice = InputHelper.addInt("Enter your choice: ", 1, 9);
+                int choice = InputHelper.addInt("Enter your choice: ", 1, 7);
 
-                switch (choice) { // val 1-9
+                switch (choice) { // val 1-7
                     case 1:
                         PokedexMenu.viewPokemons(pokedex);
                         break;
@@ -53,19 +51,13 @@ public class Main {
                         PokedexMenu.battleMenu(pokedex, stats);
                         break;
                     case 3:
-                        PokedexMenu.addPokemon(pokedex);
+                        PokedexMenu.managePokemonMenu(pokedex);
                         break;
                     case 4:
-                        PokedexMenu.editPokemon(pokedex);
-                        break;
-                    case 5:
-                        PokedexMenu.removePokemon(pokedex);
-                        break;
-                    case 6:
                         storage.savePokemons(pokedex.getAll());
                         storage.saveStats(stats);
                         break;
-                    case 7:
+                    case 5:
                         List<Pokemon> loaded = storage.loadAll();
                         if (loaded.isEmpty()) {
                             System.out.println("No Pokemon saved");
@@ -75,10 +67,10 @@ public class Main {
                         stats = storage.loadStats();
                         System.out.println("Loaded " + loaded.size() + " Pokemon and battle results");
                         break;
-                    case 8:
+                    case 6:
                         PokedexMenu.resetToSeeded(pokedex, stats);
                         break;
-                    case 9:
+                    case 7:
                         storage.savePokemons(pokedex.getAll());
                         storage.saveStats(stats);
                         System.out.println("Exiting");

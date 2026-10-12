@@ -215,4 +215,27 @@ public class PokedexMenu {
         }
         System.out.println("Wins: " + stats.getWins() + " Losses: " + stats.getLosses());
     }
+    public static void managePokemonMenu(Pokedex pokedex) {
+        System.out.println();
+        System.out.println("--Manage Pokemon--");
+        System.out.println("1. Add a Pokemon");
+        System.out.println("2. Edit a Pokemon");
+        System.out.println("3. Remove a Pokemon");
+        System.out.println("4. Go back");
+        int option = InputHelper.addInt("Pick an option: ", 1, 4);
+        switch (option) {
+            case 1:
+                addPokemon(pokedex);
+                break;
+            case 2:
+                editPokemon(pokedex);
+                break;
+            case 3:
+                removePokemon(pokedex);
+                break;
+            case 4:
+              // back
+                break;
+        }
+    }
 }
