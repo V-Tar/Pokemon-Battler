@@ -37,14 +37,9 @@ public class InputHelper {
                 System.out.println("Too long of a name " + maxLength + " characters.");
                 continue;
             }
-            if (trimmedLine.contains(",")) {
-                System.out.println("Name cannot contain commas");
-                continue;
-            }
             return trimmedLine;
         }
     }
-
     public static void menuPause() {
         System.out.print("Press enter to continue...");
         input.nextLine();
