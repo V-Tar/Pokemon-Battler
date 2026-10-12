@@ -1,7 +1,7 @@
 package pokemonbattler.ui;
 
-import pokemonbattler.battle.*;
 import pokemonbattler.Main;
+import pokemonbattler.battle.*;
 import pokemonbattler.model.*;
 
 import java.util.List;
@@ -138,6 +138,7 @@ public class PokedexMenu {
         int pickType = InputHelper.addInt("Pick type: ", 1, Type.values().length);
         return Type.values()[pickType - 1];
     }
+
     public static void battleMenu(Pokedex pokedex, BattleStats stats) {
         System.out.println();
         System.out.println("--Battle Menu--");
@@ -163,7 +164,7 @@ public class PokedexMenu {
         }
     }
 
-   public static void startBattle(Pokedex pokedex, BattleStats stats) {
+    public static void startBattle(Pokedex pokedex, BattleStats stats) {
         if (pokedex.isEmpty()) {
             System.out.println("No Pokemon available for battle");
             return;
@@ -190,10 +191,10 @@ public class PokedexMenu {
         boolean won = battle.runBattle();
         if (won) {
             System.out.println("You won!");
-            stats.recordWin();
+            stats.recordWin(player.getName());
         } else {
             System.out.println("You lost!");
-            stats.recordLoss();
+            stats.recordLoss(player.getName());
         }
 
 
@@ -208,20 +209,36 @@ public class PokedexMenu {
         return list.get(pick - 1);
     }
 
-  public static void showStats(BattleStats stats) {
+    public static void showStats(BattleStats stats) {
         if (stats.getWins() + stats.getLosses() == 0) {
             System.out.println("No Battles fought");
             return;
         }
-        System.out.println("Wins: " + stats.getWins() + " Losses: " + stats.getLosses());
+        int precent = stats.getWins() * 100 / (stats.getWins() + stats.getLosses());
+        System.out.println("Wins: " + stats.getWins() + " Losses: " + stats.getLosses() + " Win Percentage: " + precent + "%");
+        String mostUsed = stats.getMostUsedPokemon();
+        if (mostUsed != null) {
+            System.out.println("Most used Pokemon: " + mostUsed);
+            System.out.println("Stats per Pokemon:");
+            for (String pokemon : stats.getPokemonNames()) {
+                int wins = stats.getWins(pokemon);
+                int losses = stats.getLosses(pokemon);
+                if (wins + losses == 0) {
+                    continue;
+                }
+                int pokemonPrecent = wins * 100 / (wins + losses);
+                System.out.println(pokemon + " - Wins: " + wins + " Losses: " + losses + " Win Percentage: " + pokemonPrecent + "%");
+            }
+        }
     }
+
     public static void managePokemonMenu(Pokedex pokedex) {
         System.out.println();
-        System.out.println("--Manage Pokemon--");
+        System.out.println("--Manage Pokemon --");
         System.out.println("1. Add a Pokemon");
         System.out.println("2. Edit a Pokemon");
         System.out.println("3. Remove a Pokemon");
-        System.out.println("4. Go back");
+        System.out.println("4. Go Back");
         int option = InputHelper.addInt("Pick an option: ", 1, 4);
         switch (option) {
             case 1:
@@ -234,7 +251,7 @@ public class PokedexMenu {
                 removePokemon(pokedex);
                 break;
             case 4:
-              // back
+                // back
                 break;
         }
     }
