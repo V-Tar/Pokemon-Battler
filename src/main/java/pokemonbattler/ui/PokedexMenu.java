@@ -187,7 +187,7 @@ public class PokedexMenu {
 
         Trainer playerTrainer = new PlayerTrainer(player);
         Trainer cpuTrainer = new CpuTrainer(wild);
-        Battle battle = new Battle(playerTrainer, cpuTrainer);
+        Battle battle = new Battle(playerTrainer, cpuTrainer, stats);
         boolean won = battle.runBattle();
         if (won) {
             System.out.println("You won!");
@@ -219,6 +219,10 @@ public class PokedexMenu {
         String mostUsed = stats.getMostUsedPokemon();
         if (mostUsed != null) {
             System.out.println("Most used Pokemon: " + mostUsed);
+            String mostUsedAttack = stats.getMostUsedAttack();
+            if (mostUsedAttack != null) {
+                System.out.println("Most used attack: " + mostUsedAttack + " (" + stats.getAttackUses(mostUsedAttack) + " times)");
+            }
             System.out.println("Stats per Pokemon:");
             for (String pokemon : stats.getPokemonNames()) {
                 int wins = stats.getWins(pokemon);

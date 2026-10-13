@@ -9,10 +9,17 @@ public class Battle {
     private final Trainer cpu;
     private final Random random = new Random();
     private final TypeChart typeChart = new TypeChart();
+    private final BattleStats stats;
 
-    public Battle(Trainer player, Trainer cpu) {
+
+
+
+
+
+    public Battle(Trainer player, Trainer cpu, BattleStats stats) {
         this.player = player;
         this.cpu = cpu;
+        this.stats = stats;
     }
 
     public boolean runBattle() {
@@ -34,6 +41,9 @@ public class Battle {
             System.out.println("---Turn " + turn + " ---");
 
             Attack attack = attacker.chooseAttack();
+            if (attacker == player) {
+                stats.recordAttack(attack.getName());
+            }
             boolean hit = random.nextInt(100) < attack.getAccuracy();
             if (!hit) {
                 System.out.println(attacker.getDisplayName() + " used " + attack.getName() + " but missed!");

@@ -11,6 +11,7 @@ public class BattleStats {
     private int losses;
     private final Map<String, Integer> pokemonWins = new HashMap<>();
     private final Map<String, Integer> pokemonLosses = new HashMap<>();
+    private final Map<String, Integer> attackUses = new HashMap<>();
 
     public BattleStats(int wins, int losses) {
         if (wins < 0 || losses < 0) {
@@ -19,10 +20,11 @@ public class BattleStats {
         this.wins = wins;
         this.losses = losses;
     }
-    public BattleStats(int wins, int losses, Map<String, Integer> pokemonWins, Map<String, Integer> pokemonLosses) {
+    public BattleStats(int wins, int losses, Map<String, Integer> pokemonWins, Map<String, Integer> pokemonLosses, Map<String, Integer> attackUses) {
         this(wins, losses);
         copyCounts(pokemonWins, this.pokemonWins);
         copyCounts(pokemonLosses, this.pokemonLosses);
+        copyCounts(attackUses, this.attackUses);
     }
     private void copyCounts(Map<String, Integer> from, Map<String, Integer> to) {
         if (from == null) {
@@ -39,12 +41,14 @@ public class BattleStats {
     public Map<String, Integer> getPokemonLosses() {
         return new HashMap<>(pokemonLosses);
     }
+    public Map<String, Integer> getAttackUses() {return new HashMap<>(attackUses); }
 
     public void reset() {
         wins = 0;
         losses = 0;
         pokemonWins.clear();
         pokemonLosses.clear();
+        attackUses.clear();
     }
     public int getWins() {
         return wins;
@@ -91,5 +95,17 @@ public class BattleStats {
                 .distinct()
                 .sorted()
                 .toList();
+    }
+    public void recordAttack(String attackName) {
+        attackUses.put(attackName, attackUses.getOrDefault(attackName, 0 ) + 1);
+    }
+    public int getAttackUses(String attackName) {
+        return attackUses.getOrDefault(attackName, 0);
+    }
+    public String getMostUsedAttack() {
+        return attackUses.keySet().stream()
+                .sorted()
+                .max(Comparator.comparingInt(name -> attackUses.get(name)))
+                .orElse(null);
     }
 }

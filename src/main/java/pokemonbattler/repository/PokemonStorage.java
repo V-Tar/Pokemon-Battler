@@ -74,7 +74,7 @@ public class PokemonStorage {
     }
 
     public void saveStats(BattleStats stats) {
-        StatsData data = new StatsData(stats.getWins(), stats.getLosses(), stats.getPokemonWins(), stats.getPokemonLosses());
+        StatsData data = new StatsData(stats.getWins(), stats.getLosses(), stats.getPokemonWins(), stats.getPokemonLosses(), stats.getAttackUses());
         try {
             mapper.writerWithDefaultPrettyPrinter().writeValue(statsFile.toFile(), data);
         } catch (IOException e) {
@@ -91,7 +91,7 @@ public class PokemonStorage {
             if (data == null) {
                 return new BattleStats(0, 0);
             }
-            return new BattleStats(data.wins(), data.losses(), data.pokemonWins(), data.pokemonLosses());
+            return new BattleStats(data.wins(), data.losses(), data.pokemonWins(), data.pokemonLosses(), data.attackUses());
         } catch (IOException | IllegalArgumentException e) {
             System.out.println("Could not read stats.json, starting with no stat history");
             return new BattleStats(0, 0);
