@@ -51,6 +51,7 @@ public class PokedexMenu {
         System.out.println("3. Edit maxHP");
         System.out.println("4. Add attack");
         System.out.println("5. Remove attacks");
+        System.out.println();
         int option = InputHelper.addInt("Pick an option: ", 1, 5);
 
         switch (option) {
@@ -156,6 +157,7 @@ public class PokedexMenu {
                 break;
             case 3:
                 pokedex.healAll();
+                System.out.println();
                 System.out.println("All Pokemon fully healed");
                 break;
             case 4:
@@ -183,6 +185,7 @@ public class PokedexMenu {
         Random random = new Random();
         int index = random.nextInt(wildPool.size());
         Pokemon wild = wildPool.get(index);
+        System.out.println();
         System.out.println("A wild " + wild.getName() + " has appeared!");
 
         Trainer playerTrainer = new PlayerTrainer(player);
@@ -201,6 +204,8 @@ public class PokedexMenu {
     }
 
     static Pokemon pickPokemon(Pokedex pokedex, String prompt) {
+        System.out.println();
+        System.out.println("Pick a Pokemon:");
         List<Pokemon> list = pokedex.getAll();
         for (int i = 0; i < list.size(); i++) {
             System.out.println(i + 1 + ". " + list.get(i).getName());
@@ -211,6 +216,7 @@ public class PokedexMenu {
 
     public static void showStats(BattleStats stats) {
         if (stats.getWins() + stats.getLosses() == 0) {
+            System.out.println();
             System.out.println("No Battles fought");
             return;
         }

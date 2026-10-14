@@ -39,6 +39,7 @@ public class Battle {
 
         int turn = 1;
         while (!player.getPokemon().isFainted() && !cpu.getPokemon().isFainted()) {
+            System.out.println();
             System.out.println("---Turn " + turn + " ---");
 
             Attack attack = attacker.chooseAttack();
